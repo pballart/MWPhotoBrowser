@@ -97,6 +97,10 @@
 		4C6F96F714AF710800F8389A /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F96F514AF710800F8389A /* MBProgressHUD.m */; };
 		4C6F97C714AF74E200F8389A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6F97C614AF74E200F8389A /* MessageUI.framework */; };
 		4CB08BA314B1F38700730E9F /* MWPhotoProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB08BA214B1F38700730E9F /* MWPhotoProtocol.h */; };
+		789619C71A27355200DC4ABD /* SCImagePanScrollBarView.h in Headers */ = {isa = PBXBuildFile; fileRef = 789619C21A27355200DC4ABD /* SCImagePanScrollBarView.h */; };
+		789619C81A27355200DC4ABD /* SCImagePanScrollBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 789619C31A27355200DC4ABD /* SCImagePanScrollBarView.m */; };
+		789619C91A27355200DC4ABD /* SCImagePanViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 789619C41A27355200DC4ABD /* SCImagePanViewController.h */; };
+		789619CA1A27355200DC4ABD /* SCImagePanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 789619C51A27355200DC4ABD /* SCImagePanViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -193,6 +197,11 @@
 		4C6F96F514AF710800F8389A /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = Libraries/MBProgressHUD/MBProgressHUD.m; sourceTree = SOURCE_ROOT; };
 		4C6F97C614AF74E200F8389A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		4CB08BA214B1F38700730E9F /* MWPhotoProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWPhotoProtocol.h; path = Classes/MWPhotoProtocol.h; sourceTree = SOURCE_ROOT; };
+		789619C21A27355200DC4ABD /* SCImagePanScrollBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCImagePanScrollBarView.h; sourceTree = "<group>"; };
+		789619C31A27355200DC4ABD /* SCImagePanScrollBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCImagePanScrollBarView.m; sourceTree = "<group>"; };
+		789619C41A27355200DC4ABD /* SCImagePanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCImagePanViewController.h; sourceTree = "<group>"; };
+		789619C51A27355200DC4ABD /* SCImagePanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCImagePanViewController.m; sourceTree = "<group>"; };
+		789619CB1A273EC600DC4ABD /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,6 +288,7 @@
 		4C6F96C614AF704100F8389A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				789619CB1A273EC600DC4ABD /* CoreMotion.framework */,
 				0E3CF61918CF321F000EC5F2 /* MapKit.framework */,
 				0E8515C917FCB05B00FE1EF3 /* AssetsLibrary.framework */,
 				0E8515C317FC780500FE1EF3 /* QuartzCore.framework */,
@@ -328,6 +338,7 @@
 		4C6F96F014AF70E800F8389A /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				789619BF1A27355200DC4ABD /* SubjectiveCPhotoPanner */,
 				0E3D589B180474330000E3A0 /* PSTCollectionView (1.2) */,
 				0E8515BE17FC77D200FE1EF3 /* DACircularProgress (675f395) */,
 				4C6F96F214AF70FA00F8389A /* MBProgressHUD (0.8) */,
@@ -394,6 +405,18 @@
 			path = MWPhotoBrowser;
 			sourceTree = "<group>";
 		};
+		789619BF1A27355200DC4ABD /* SubjectiveCPhotoPanner */ = {
+			isa = PBXGroup;
+			children = (
+				789619C21A27355200DC4ABD /* SCImagePanScrollBarView.h */,
+				789619C31A27355200DC4ABD /* SCImagePanScrollBarView.m */,
+				789619C41A27355200DC4ABD /* SCImagePanViewController.h */,
+				789619C51A27355200DC4ABD /* SCImagePanViewController.m */,
+			);
+			name = SubjectiveCPhotoPanner;
+			path = Libraries/SubjectiveCPhotoPanner;
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -423,6 +446,7 @@
 				0E17D76E17FAEADE0094ABF6 /* SDWebImageDownloaderOperation.h in Headers */,
 				0E3D58C1180474330000E3A0 /* PSTCollectionViewData.h in Headers */,
 				0E3D5899180467550000E3A0 /* MWGridViewController.h in Headers */,
+				789619C71A27355200DC4ABD /* SCImagePanScrollBarView.h in Headers */,
 				0E3D58BA180474330000E3A0 /* PSTCollectionView.h in Headers */,
 				4C6F96E814AF70BD00F8389A /* MWTapDetectingImageView.h in Headers */,
 				0E17D77D17FAEADE0094ABF6 /* UIImageView+WebCache.h in Headers */,
@@ -436,6 +460,7 @@
 				0E3D58CA180474330000E3A0 /* PSTCollectionViewUpdateItem.h in Headers */,
 				4CB08BA314B1F38700730E9F /* MWPhotoProtocol.h in Headers */,
 				0E17D77717FAEADE0094ABF6 /* UIImage+GIF.h in Headers */,
+				789619C91A27355200DC4ABD /* SCImagePanViewController.h in Headers */,
 				0EFEA24D17FB08B400E451B6 /* MWCommon.h in Headers */,
 				0EF66C6719CC8E0000BC267E /* UIView+WebCacheOperation.h in Headers */,
 				0E17D77017FAEADE0094ABF6 /* SDWebImageManager.h in Headers */,
@@ -530,8 +555,10 @@
 				4C6F96EB14AF70BD00F8389A /* MWTapDetectingView.m in Sources */,
 				0E3D58C2180474330000E3A0 /* PSTCollectionViewData.m in Sources */,
 				4C6F96ED14AF70BD00F8389A /* MWZoomingScrollView.m in Sources */,
+				789619CA1A27355200DC4ABD /* SCImagePanViewController.m in Sources */,
 				0E3D58CB180474330000E3A0 /* PSTCollectionViewUpdateItem.m in Sources */,
 				0E17D77117FAEADE0094ABF6 /* SDWebImageManager.m in Sources */,
+				789619C81A27355200DC4ABD /* SCImagePanScrollBarView.m in Sources */,
 				4C6F96F714AF710800F8389A /* MBProgressHUD.m in Sources */,
 				0E3D58C4180474330000E3A0 /* PSTCollectionViewFlowLayout.m in Sources */,
 				2615E44C18CD57C700447857 /* NSData+ImageContentType.m in Sources */,

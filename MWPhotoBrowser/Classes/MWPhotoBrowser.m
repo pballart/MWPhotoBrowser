@@ -15,6 +15,10 @@
 #define PADDING                  10
 #define ACTION_SHEET_OLD_ACTIONS 2000
 
+static CGFloat kMovementSmoothing = 0.3f;
+static CGFloat kAnimationDuration = 0.3f;
+static CGFloat kRotationMultiplier = 5.f;
+
 @implementation MWPhotoBrowser
 
 #pragma mark - Init
@@ -91,10 +95,16 @@
                                                  name:MWPHOTO_LOADING_DID_END_NOTIFICATION
                                                object:nil];
     
+    //Paper effect
+    self.motionManager = [[CMMotionManager alloc] init];
+    self.motionBasedPanEnabled = YES;
+    
 }
 
 - (void)dealloc {
     _pagingScrollView.delegate = nil;
+    [_displayLink invalidate];
+    [_motionManager stopDeviceMotionUpdates];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self releaseAllUnderlyingPhotos:NO];
     [[SDImageCache sharedImageCache] clearMemory]; // clear memory
@@ -429,6 +439,10 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     _viewIsActive = YES;
+    
+    [self.motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMDeviceMotion *motion, NSError *error) {
+        [self calculateRotationBasedOnDeviceMotionRotationRate:motion];
+    }];
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {
@@ -815,6 +829,27 @@
 			MWZoomingScrollView *page = [self dequeueRecycledPage];
 			if (!page) {
 				page = [[MWZoomingScrollView alloc] initWithPhotoBrowser:self];
+                page.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+                page.backgroundColor = [UIColor blackColor];
+                page.delegate = self;
+                page.scrollEnabled = NO;
+                page.alwaysBounceVertical = NO;
+                page.maximumZoomScale = 2.f;
+                [page.pinchGestureRecognizer addTarget:self action:@selector(pinchGestureRecognized:)];
+                
+                self.scrollBarView = [[SCImagePanScrollBarView alloc] initWithFrame:self.view.bounds edgeInsets:UIEdgeInsetsMake(0.f, 10.f, 50.f, 10.f)];
+                self.scrollBarView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+                self.scrollBarView.userInteractionEnabled = NO;
+                [self.view addSubview:self.scrollBarView];
+                
+                self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkUpdate:)];
+                [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+                
+                UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleMotionBasedPan:)];
+                [page addGestureRecognizer:tapGestureRecognizer];
+                
+                page.contentOffset = CGPointMake((page.contentSize.width / 2.f) - (CGRectGetWidth(page.bounds)) / 2.f,
+                                                                   (page.contentSize.height / 2.f) - (CGRectGetHeight(page.bounds)) / 2.f);
 			}
 			[_visiblePages addObject:page];
 			[self configurePage:page forIndex:index];
@@ -951,6 +986,164 @@
     // Update nav
     [self updateNavigation];
     
+}
+
+#pragma mark - Parallax
+
+- (void)calculateRotationBasedOnDeviceMotionRotationRate:(CMDeviceMotion *)motion
+{
+    if (self.isMotionBasedPanEnabled)
+    {
+        CGFloat xRotationRate = motion.rotationRate.x;
+        CGFloat yRotationRate = motion.rotationRate.y;
+        CGFloat zRotationRate = motion.rotationRate.z;
+        
+        if (fabs(yRotationRate) > (fabs(xRotationRate) + fabs(zRotationRate)))
+        {
+            CGFloat invertedYRotationRate = yRotationRate * -1;
+            
+            CGFloat zoomScale = [self maximumZoomScaleForImage:[self pageDisplayedAtIndex:_currentPageIndex].photoImageView.image];
+            CGFloat interpretedXOffset = [self pageDisplayedAtIndex:_currentPageIndex].contentOffset.x + (invertedYRotationRate * zoomScale * kRotationMultiplier);
+            
+            CGPoint contentOffset = [self clampedContentOffsetForHorizontalOffset:interpretedXOffset];
+            
+            [UIView animateWithDuration:kMovementSmoothing
+                                  delay:0.0f
+                                options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseOut
+                             animations:^{
+                                 [[self pageDisplayedAtIndex:_currentPageIndex] setContentOffset:contentOffset animated:NO];
+                             } completion:NULL];
+        }
+    }
+}
+
+#pragma mark - Zoom toggling
+
+- (void)toggleMotionBasedPan:(id)sender
+{
+    BOOL motionBasedPanWasEnabled = self.isMotionBasedPanEnabled;
+    if (motionBasedPanWasEnabled)
+    {
+        self.motionBasedPanEnabled = NO;
+    }
+    
+    [UIView animateWithDuration:kAnimationDuration
+                     animations:^{
+                         [self updateViewsForMotionBasedPanEnabled:!motionBasedPanWasEnabled];
+                     } completion:^(BOOL finished) {
+                         if (motionBasedPanWasEnabled == NO)
+                         {
+                             self.motionBasedPanEnabled = YES;
+                         }
+                     }];
+}
+
+- (void)updateViewsForMotionBasedPanEnabled:(BOOL)motionBasedPanEnabled
+{
+    if (motionBasedPanEnabled)
+    {
+        [self updateScrollViewZoomToMaximumForImage:[self pageDisplayedAtIndex:_currentPageIndex].photoImageView.image];
+        [self pageDisplayedAtIndex:_currentPageIndex].scrollEnabled = NO;
+    }
+    else
+    {
+        [self pageDisplayedAtIndex:_currentPageIndex].zoomScale = 1.f;
+        [self pageDisplayedAtIndex:_currentPageIndex].scrollEnabled = YES;
+    }
+}
+
+#pragma mark - Zooming
+
+- (CGFloat)maximumZoomScaleForImage:(UIImage *)image
+{
+    return (CGRectGetHeight([self pageDisplayedAtIndex:_currentPageIndex].bounds) / CGRectGetWidth([self pageDisplayedAtIndex:_currentPageIndex].bounds)) * (image.size.width / image.size.height);
+}
+
+- (void)updateScrollViewZoomToMaximumForImage:(UIImage *)image
+{
+    CGFloat zoomScale = [self maximumZoomScaleForImage:image];
+    
+    [self pageDisplayedAtIndex:_currentPageIndex].maximumZoomScale = zoomScale;
+    [self pageDisplayedAtIndex:_currentPageIndex].zoomScale = zoomScale;
+}
+
+#pragma mark - CADisplayLink
+
+- (void)displayLinkUpdate:(CADisplayLink *)displayLink
+{
+    CALayer *panningImageViewPresentationLayer = [self pageDisplayedAtIndex:_currentPageIndex].layer.presentationLayer;
+    CALayer *panningScrollViewPresentationLayer = [self pageDisplayedAtIndex:_currentPageIndex].layer.presentationLayer;
+    
+    CGFloat horizontalContentOffset = CGRectGetMinX(panningScrollViewPresentationLayer.bounds);
+    
+    CGFloat contentWidth = CGRectGetWidth(panningImageViewPresentationLayer.frame);
+    CGFloat visibleWidth = CGRectGetWidth([self pageDisplayedAtIndex:_currentPageIndex].bounds);
+    
+    CGFloat clampedXOffsetAsPercentage = fmax(0.f, fmin(1.f, horizontalContentOffset / (contentWidth - visibleWidth)));
+    
+    CGFloat scrollBarWidthPercentage = visibleWidth / contentWidth;
+    CGFloat scrollableAreaPercentage = 1.0 - scrollBarWidthPercentage;
+    
+    [self.scrollBarView updateWithScrollAmount:clampedXOffsetAsPercentage forScrollableWidth:scrollBarWidthPercentage inScrollableArea:scrollableAreaPercentage];
+}
+
+#pragma mark - Pinch gesture
+
+- (void)pinchGestureRecognized:(id)sender
+{
+    self.motionBasedPanEnabled = NO;
+    [self pageDisplayedAtIndex:_currentPageIndex].scrollEnabled = YES;
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    if ([scrollView isKindOfClass:MWZoomingScrollView.class]) {
+        return [self pageDisplayedAtIndex:_currentPageIndex].photoImageView;
+    } else {
+        return nil;
+    }
+}
+
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale
+{
+    if ([scrollView isKindOfClass:MWZoomingScrollView.class]) {
+        [scrollView setContentOffset:[self clampedContentOffsetForHorizontalOffset:scrollView.contentOffset.x] animated:YES];
+    }
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if ([scrollView isKindOfClass:MWZoomingScrollView.class]) {
+        if (decelerate == NO)
+        {
+            [scrollView setContentOffset:[self clampedContentOffsetForHorizontalOffset:scrollView.contentOffset.x] animated:YES];
+        }
+    }
+    
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
+    if ([scrollView isKindOfClass:MWZoomingScrollView.class]) {
+        [scrollView setContentOffset:[self clampedContentOffsetForHorizontalOffset:scrollView.contentOffset.x] animated:YES];
+    }
+    
+}
+
+#pragma mark - Helpers
+
+- (CGPoint)clampedContentOffsetForHorizontalOffset:(CGFloat)horizontalOffset;
+{
+    CGFloat maximumXOffset = [self pageDisplayedAtIndex:_currentPageIndex].contentSize.width - CGRectGetWidth([self pageDisplayedAtIndex:_currentPageIndex].bounds);
+    CGFloat minimumXOffset = 0.f;
+    
+    CGFloat clampedXOffset = fmaxf(minimumXOffset, fmin(horizontalOffset, maximumXOffset));
+    CGFloat centeredY = ([self pageDisplayedAtIndex:_currentPageIndex].contentSize.height / 2.f) - (CGRectGetHeight([self pageDisplayedAtIndex:_currentPageIndex].bounds)) / 2.f;
+    
+    return CGPointMake(clampedXOffset, centeredY);
 }
 
 #pragma mark - Frame Calculations

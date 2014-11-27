@@ -10,6 +10,8 @@
 #import "MBProgressHUD.h"
 #import "MWGridViewController.h"
 #import "MWZoomingScrollView.h"
+#import "SCImagePanScrollBarView.h"
+#import <CoreMotion/CoreMotion.h>
 
 // Declare private methods of browser
 @interface MWPhotoBrowser () {
@@ -71,6 +73,11 @@
 
 // Properties
 @property (nonatomic) UIActivityViewController *activityViewController;
+@property (nonatomic, strong) CMMotionManager *motionManager;
+@property (nonatomic, strong) CADisplayLink *displayLink;
+@property (nonatomic, strong) SCImagePanScrollBarView *scrollBarView;
+
+@property (nonatomic, assign, getter = isMotionBasedPanEnabled) BOOL motionBasedPanEnabled;
 
 // Layout
 - (void)layoutVisiblePages;
