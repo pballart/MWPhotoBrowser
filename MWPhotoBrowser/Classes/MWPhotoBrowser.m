@@ -834,8 +834,8 @@ static CGFloat kRotationMultiplier = 5.f;
                 page.delegate = self;
                 page.scrollEnabled = NO;
                 page.alwaysBounceVertical = NO;
-                page.maximumZoomScale = 2.f;
-                [page.pinchGestureRecognizer addTarget:self action:@selector(pinchGestureRecognized:)];
+                page.maximumZoomScale = 1.f;
+//                [page.pinchGestureRecognizer addTarget:self action:@selector(pinchGestureRecognized:)];
                 
                 self.scrollBarView = [[SCImagePanScrollBarView alloc] initWithFrame:self.view.bounds edgeInsets:UIEdgeInsetsMake(0.f, 10.f, 50.f, 10.f)];
                 self.scrollBarView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
@@ -847,9 +847,7 @@ static CGFloat kRotationMultiplier = 5.f;
                 
                 UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleMotionBasedPan:)];
                 [page addGestureRecognizer:tapGestureRecognizer];
-                
-                page.contentOffset = CGPointMake((page.contentSize.width / 2.f) - (CGRectGetWidth(page.bounds)) / 2.f,
-                                                                   (page.contentSize.height / 2.f) - (CGRectGetHeight(page.bounds)) / 2.f);
+
 			}
 			[_visiblePages addObject:page];
 			[self configurePage:page forIndex:index];
@@ -1044,11 +1042,15 @@ static CGFloat kRotationMultiplier = 5.f;
     {
         [self updateScrollViewZoomToMaximumForImage:[self pageDisplayedAtIndex:_currentPageIndex].photoImageView.image];
         [self pageDisplayedAtIndex:_currentPageIndex].scrollEnabled = NO;
+        [self hideControls];
+        [self.scrollBarView setAlpha:1.f];
     }
     else
     {
-        [self pageDisplayedAtIndex:_currentPageIndex].zoomScale = 1.f;
+        [self updateScrollViewZoomToMinimumForImage:[self pageDisplayedAtIndex:_currentPageIndex].photoImageView.image];
         [self pageDisplayedAtIndex:_currentPageIndex].scrollEnabled = YES;
+        [self toggleControls];
+        [self.scrollBarView setAlpha:0.f];
     }
 }
 
@@ -1056,14 +1058,44 @@ static CGFloat kRotationMultiplier = 5.f;
 
 - (CGFloat)maximumZoomScaleForImage:(UIImage *)image
 {
-    return (CGRectGetHeight([self pageDisplayedAtIndex:_currentPageIndex].bounds) / CGRectGetWidth([self pageDisplayedAtIndex:_currentPageIndex].bounds)) * (image.size.width / image.size.height);
+    // Sizes
+    CGSize boundsSize = [self pageDisplayedAtIndex:_currentPageIndex].bounds.size;
+    CGSize imageSize = image.size;
+    
+    // Calculate Min
+    //CGFloat xScale = boundsSize.width / imageSize.width;    // the scale needed to perfectly fit the image width-wise
+    CGFloat yScale = boundsSize.height / imageSize.height;  // the scale needed to perfectly fit the image height-wise
+    return yScale;
 }
+
+- (CGFloat)minimumZoomScaleForImage:(UIImage *)image
+{
+    // Sizes
+    CGSize boundsSize = [self pageDisplayedAtIndex:_currentPageIndex].bounds.size;
+    CGSize imageSize = image.size;
+    
+    // Calculate Min
+    CGFloat xScale = boundsSize.width / imageSize.width;    // the scale needed to perfectly fit the image width-wise
+    //CGFloat yScale = boundsSize.height / imageSize.height;  // the scale needed to perfectly fit the image height-wise
+    return xScale;
+}
+
 
 - (void)updateScrollViewZoomToMaximumForImage:(UIImage *)image
 {
     CGFloat zoomScale = [self maximumZoomScaleForImage:image];
     
     [self pageDisplayedAtIndex:_currentPageIndex].maximumZoomScale = zoomScale;
+    [self pageDisplayedAtIndex:_currentPageIndex].minimumZoomScale = zoomScale;
+    [self pageDisplayedAtIndex:_currentPageIndex].zoomScale = zoomScale;
+}
+
+- (void)updateScrollViewZoomToMinimumForImage:(UIImage *)image
+{
+    CGFloat zoomScale = [self minimumZoomScaleForImage:image];
+    
+    [self pageDisplayedAtIndex:_currentPageIndex].maximumZoomScale = zoomScale;
+    [self pageDisplayedAtIndex:_currentPageIndex].minimumZoomScale = zoomScale;
     [self pageDisplayedAtIndex:_currentPageIndex].zoomScale = zoomScale;
 }
 
@@ -1071,7 +1103,7 @@ static CGFloat kRotationMultiplier = 5.f;
 
 - (void)displayLinkUpdate:(CADisplayLink *)displayLink
 {
-    CALayer *panningImageViewPresentationLayer = [self pageDisplayedAtIndex:_currentPageIndex].layer.presentationLayer;
+    CALayer *panningImageViewPresentationLayer = [self pageDisplayedAtIndex:_currentPageIndex].photoImageView.layer.presentationLayer;
     CALayer *panningScrollViewPresentationLayer = [self pageDisplayedAtIndex:_currentPageIndex].layer.presentationLayer;
     
     CGFloat horizontalContentOffset = CGRectGetMinX(panningScrollViewPresentationLayer.bounds);
@@ -1087,13 +1119,13 @@ static CGFloat kRotationMultiplier = 5.f;
     [self.scrollBarView updateWithScrollAmount:clampedXOffsetAsPercentage forScrollableWidth:scrollBarWidthPercentage inScrollableArea:scrollableAreaPercentage];
 }
 
-#pragma mark - Pinch gesture
-
-- (void)pinchGestureRecognized:(id)sender
-{
-    self.motionBasedPanEnabled = NO;
-    [self pageDisplayedAtIndex:_currentPageIndex].scrollEnabled = YES;
-}
+//#pragma mark - Pinch gesture
+//
+//- (void)pinchGestureRecognized:(id)sender
+//{
+//    self.motionBasedPanEnabled = NO;
+//    [self pageDisplayedAtIndex:_currentPageIndex].scrollEnabled = YES;
+//}
 
 #pragma mark - UIScrollViewDelegate
 
@@ -1539,6 +1571,9 @@ static CGFloat kRotationMultiplier = 5.f;
                 v.alpha = alpha;
             }
         }
+        
+        //ScrollBar
+        [self.scrollBarView setAlpha:!alpha];
         
         // Selected buttons
         for (MWZoomingScrollView *page in _visiblePages) {

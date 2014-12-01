@@ -13,14 +13,14 @@
 
 @class MWPhotoBrowser, MWPhoto, MWCaptionView;
 
-@interface MWZoomingScrollView : UIScrollView <UIScrollViewDelegate, MWTapDetectingImageViewDelegate, MWTapDetectingViewDelegate> {
+@interface MWZoomingScrollView : UIScrollView <UIScrollViewDelegate> {
 }
 
 @property () NSUInteger index;
 @property (nonatomic) id <MWPhoto> photo;
 @property (nonatomic, weak) MWCaptionView *captionView;
 @property (nonatomic, weak) UIButton *selectedButton;
-@property (nonatomic, strong) MWTapDetectingImageView *photoImageView;
+@property (nonatomic, strong) UIImageView *photoImageView;
 
 
 - (id)initWithPhotoBrowser:(MWPhotoBrowser *)browser;

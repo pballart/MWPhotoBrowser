@@ -17,7 +17,6 @@
 @interface MWZoomingScrollView () {
     
     MWPhotoBrowser __weak *_photoBrowser;
-	MWTapDetectingView *_tapView; // for background taps
 	DACircularProgressView *_loadingIndicator;
     UIImageView *_loadingError;
     
@@ -33,17 +32,9 @@
         // Setup
         _index = NSUIntegerMax;
         _photoBrowser = browser;
-        
-		// Tap view for background
-		_tapView = [[MWTapDetectingView alloc] initWithFrame:self.bounds];
-		_tapView.tapDelegate = self;
-		_tapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		_tapView.backgroundColor = [UIColor blackColor];
-		[self addSubview:_tapView];
 		
 		// Image view
-		_photoImageView = [[MWTapDetectingImageView alloc] initWithFrame:CGRectZero];
-		_photoImageView.tapDelegate = self;
+		_photoImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
 		_photoImageView.contentMode = UIViewContentModeCenter;
 		_photoImageView.backgroundColor = [UIColor blackColor];
 		[self addSubview:_photoImageView];
@@ -70,7 +61,6 @@
         
 		// Setup
 		self.backgroundColor = [UIColor blackColor];
-		self.delegate = self;
 		self.showsHorizontalScrollIndicator = NO;
 		self.showsVerticalScrollIndicator = NO;
 		self.decelerationRate = UIScrollViewDecelerationRateFast;
@@ -260,8 +250,8 @@
 	}
 	
 	// Set min/max zoom
-	self.maximumZoomScale = maxScale;
-	self.minimumZoomScale = minScale;
+	self.maximumZoomScale = yScale;
+	self.minimumZoomScale = yScale;
     
     // Initial zoom
     self.zoomScale = [self initialZoomScaleWithMinScale];
@@ -283,9 +273,6 @@
 #pragma mark - Layout
 
 - (void)layoutSubviews {
-	
-	// Update tap view frame
-	_tapView.frame = self.bounds;
 	
 	// Position indicators (centre does not seem to work!)
 	if (!_loadingIndicator.hidden)
@@ -319,97 +306,10 @@
 	} else {
         frameToCenter.origin.y = 0;
 	}
-    
 	// Center
 	if (!CGRectEqualToRect(_photoImageView.frame, frameToCenter))
 		_photoImageView.frame = frameToCenter;
-	
 }
 
-#pragma mark - UIScrollViewDelegate
-
-- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
-	return _photoImageView;
-}
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-	[_photoBrowser cancelControlHiding];
-}
-
-- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
-    self.scrollEnabled = YES; // reset
-	[_photoBrowser cancelControlHiding];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-	[_photoBrowser hideControlsAfterDelay];
-}
-
-- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-    [self setNeedsLayout];
-    [self layoutIfNeeded];
-}
-
-#pragma mark - Tap Detection
-
-- (void)handleSingleTap:(CGPoint)touchPoint {
-	[_photoBrowser performSelector:@selector(toggleControls) withObject:nil afterDelay:0.2];
-}
-
-- (void)handleDoubleTap:(CGPoint)touchPoint {
-	
-	// Cancel any single tap handling
-	[NSObject cancelPreviousPerformRequestsWithTarget:_photoBrowser];
-	
-	// Zoom
-	if (self.zoomScale != self.minimumZoomScale && self.zoomScale != [self initialZoomScaleWithMinScale]) {
-		
-		// Zoom out
-		[self setZoomScale:self.minimumZoomScale animated:YES];
-		
-	} else {
-		
-		// Zoom in to twice the size
-        CGFloat newZoomScale = ((self.maximumZoomScale + self.minimumZoomScale) / 2);
-        CGFloat xsize = self.bounds.size.width / newZoomScale;
-        CGFloat ysize = self.bounds.size.height / newZoomScale;
-        [self zoomToRect:CGRectMake(touchPoint.x - xsize/2, touchPoint.y - ysize/2, xsize, ysize) animated:YES];
-
-	}
-	
-	// Delay controls
-	[_photoBrowser hideControlsAfterDelay];
-	
-}
-
-// Image View
-- (void)imageView:(UIImageView *)imageView singleTapDetected:(UITouch *)touch { 
-    [self handleSingleTap:[touch locationInView:imageView]];
-}
-- (void)imageView:(UIImageView *)imageView doubleTapDetected:(UITouch *)touch {
-    [self handleDoubleTap:[touch locationInView:imageView]];
-}
-
-// Background View
-- (void)view:(UIView *)view singleTapDetected:(UITouch *)touch {
-    // Translate touch location to image view location
-    CGFloat touchX = [touch locationInView:view].x;
-    CGFloat touchY = [touch locationInView:view].y;
-    touchX *= 1/self.zoomScale;
-    touchY *= 1/self.zoomScale;
-    touchX += self.contentOffset.x;
-    touchY += self.contentOffset.y;
-    [self handleSingleTap:CGPointMake(touchX, touchY)];
-}
-- (void)view:(UIView *)view doubleTapDetected:(UITouch *)touch {
-    // Translate touch location to image view location
-    CGFloat touchX = [touch locationInView:view].x;
-    CGFloat touchY = [touch locationInView:view].y;
-    touchX *= 1/self.zoomScale;
-    touchY *= 1/self.zoomScale;
-    touchX += self.contentOffset.x;
-    touchY += self.contentOffset.y;
-    [self handleDoubleTap:CGPointMake(touchX, touchY)];
-}
 
 @end
