@@ -125,7 +125,7 @@ static const CGFloat CRMotionViewRotationFactor = 4.0f;
     if (contentView.frame.size.width == 0 && contentView.frame.size.height == 0) {
         contentView = [[UIView alloc] initWithFrame:self.frame];
     }
-    
+    _viewFrame = self.superview.frame;
     CGFloat width = _viewFrame.size.height / contentView.frame.size.height * contentView.frame.size.width;
     [contentView setFrame:CGRectMake(0, 0, width, _viewFrame.size.height)];
 

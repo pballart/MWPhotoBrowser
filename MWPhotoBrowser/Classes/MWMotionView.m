@@ -38,6 +38,7 @@
         // Image view
         _motionView = [[CRMotionView alloc] initWithFrame:self.bounds];
         _motionView.delegate = self;
+        [_motionView setBackgroundColor:[UIColor redColor]];
         [self addSubview:_motionView];
         
         // Loading indicator
@@ -178,6 +179,8 @@
     // Bail if no image
     if (_motionView.image == nil) return;
     
+    [_motionView setFrame:self.bounds];
+    
     // Reset position
     _motionView.frame = CGRectMake(0, 0, _motionView.frame.size.width, _motionView.frame.size.height);
     
@@ -210,7 +213,6 @@
 #pragma mark - Layout
 
 - (void)layoutSubviews {
-    
     // Position indicators (centre does not seem to work!)
     if (!_loadingIndicator.hidden)
         _loadingIndicator.frame = CGRectMake(floorf((self.bounds.size.width - _loadingIndicator.frame.size.width) / 2.),
@@ -225,6 +227,15 @@
     
     // Super
     [super layoutSubviews];
+    
+//    //Reset image to adjust content size
+    [_motionView setImage:_motionView.image];
+    
+    if (UIInterfaceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
+        _motionView.motionEnabled = NO;
+    } else {
+        _motionView.motionEnabled = YES;
+    }
     
     // Center the image as it becomes smaller than the size of the screen
     CGSize boundsSize = self.bounds.size;
@@ -252,11 +263,9 @@
 
 #pragma mark - CRMotionView Delegate
 
-
 - (void)handleTap
 {
     [_photoBrowser performSelector:@selector(toggleControls) withObject:nil afterDelay:0.2];
 }
-
 
 @end
