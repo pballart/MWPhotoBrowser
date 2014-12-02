@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
 #import "MWGridViewController.h"
-#import "MWZoomingScrollView.h"
+#import "MWMotionView.h"
 
 // Declare private methods of browser
 @interface MWPhotoBrowser () {
@@ -85,10 +85,10 @@
 // Paging
 - (void)tilePages;
 - (BOOL)isDisplayingPageForIndex:(NSUInteger)index;
-- (MWZoomingScrollView *)pageDisplayedAtIndex:(NSUInteger)index;
-- (MWZoomingScrollView *)pageDisplayingPhoto:(id<MWPhoto>)photo;
-- (MWZoomingScrollView *)dequeueRecycledPage;
-- (void)configurePage:(MWZoomingScrollView *)page forIndex:(NSUInteger)index;
+- (MWMotionView *)pageDisplayedAtIndex:(NSUInteger)index;
+- (MWMotionView *)pageDisplayingPhoto:(id<MWPhoto>)photo;
+- (MWMotionView *)dequeueRecycledPage;
+- (void)configurePage:(MWMotionView *)page forIndex:(NSUInteger)index;
 - (void)didStartViewingPageAtIndex:(NSUInteger)index;
 
 // Frames

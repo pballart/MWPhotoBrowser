@@ -528,7 +528,7 @@
 	_pagingScrollView.contentSize = [self contentSizeForPagingScrollView];
 	
 	// Adjust frames and configuration of each visible page
-	for (MWZoomingScrollView *page in _visiblePages) {
+	for (MWMotionView *page in _visiblePages) {
         NSUInteger index = page.index;
 		page.frame = [self frameForPageAtIndex:index];
         if (page.captionView) {
@@ -731,7 +731,7 @@
 }
 
 - (void)loadAdjacentPhotosIfNecessary:(id<MWPhoto>)photo {
-    MWZoomingScrollView *page = [self pageDisplayingPhoto:photo];
+    MWMotionView *page = [self pageDisplayingPhoto:photo];
     if (page) {
         // If page is current page then initiate loading of previous and next pages
         NSUInteger pageIndex = page.index;
@@ -760,7 +760,7 @@
 
 - (void)handleMWPhotoLoadingDidEndNotification:(NSNotification *)notification {
     id <MWPhoto> photo = [notification object];
-    MWZoomingScrollView *page = [self pageDisplayingPhoto:photo];
+    MWMotionView *page = [self pageDisplayingPhoto:photo];
     if (page) {
         if ([photo underlyingImage]) {
             // Successful load
@@ -792,7 +792,7 @@
 	
 	// Recycle no longer needed pages
     NSInteger pageIndex;
-	for (MWZoomingScrollView *page in _visiblePages) {
+	for (MWMotionView *page in _visiblePages) {
         pageIndex = page.index;
 		if (pageIndex < (NSUInteger)iFirstIndex || pageIndex > (NSUInteger)iLastIndex) {
 			[_recycledPages addObject:page];
@@ -812,9 +812,9 @@
 		if (![self isDisplayingPageForIndex:index]) {
             
             // Add new page
-			MWZoomingScrollView *page = [self dequeueRecycledPage];
+			MWMotionView *page = [self dequeueRecycledPage];
 			if (!page) {
-				page = [[MWZoomingScrollView alloc] initWithPhotoBrowser:self];
+				page = [[MWMotionView alloc] initWithPhotoBrowser:self];
 			}
 			[_visiblePages addObject:page];
 			[self configurePage:page forIndex:index];
@@ -851,7 +851,7 @@
 
 - (void)updateVisiblePageStates {
     NSSet *copy = [_visiblePages copy];
-    for (MWZoomingScrollView *page in copy) {
+    for (MWMotionView *page in copy) {
         
         // Update selection
         page.selectedButton.selected = [self photoIsSelectedAtIndex:page.index];
@@ -860,14 +860,14 @@
 }
 
 - (BOOL)isDisplayingPageForIndex:(NSUInteger)index {
-	for (MWZoomingScrollView *page in _visiblePages)
+	for (MWMotionView *page in _visiblePages)
 		if (page.index == index) return YES;
 	return NO;
 }
 
-- (MWZoomingScrollView *)pageDisplayedAtIndex:(NSUInteger)index {
-	MWZoomingScrollView *thePage = nil;
-	for (MWZoomingScrollView *page in _visiblePages) {
+- (MWMotionView *)pageDisplayedAtIndex:(NSUInteger)index {
+	MWMotionView *thePage = nil;
+	for (MWMotionView *page in _visiblePages) {
 		if (page.index == index) {
 			thePage = page; break;
 		}
@@ -875,9 +875,9 @@
 	return thePage;
 }
 
-- (MWZoomingScrollView *)pageDisplayingPhoto:(id<MWPhoto>)photo {
-	MWZoomingScrollView *thePage = nil;
-	for (MWZoomingScrollView *page in _visiblePages) {
+- (MWMotionView *)pageDisplayingPhoto:(id<MWPhoto>)photo {
+	MWMotionView *thePage = nil;
+	for (MWMotionView *page in _visiblePages) {
 		if (page.photo == photo) {
 			thePage = page; break;
 		}
@@ -885,14 +885,14 @@
 	return thePage;
 }
 
-- (void)configurePage:(MWZoomingScrollView *)page forIndex:(NSUInteger)index {
+- (void)configurePage:(MWMotionView *)page forIndex:(NSUInteger)index {
 	page.frame = [self frameForPageAtIndex:index];
     page.index = index;
     page.photo = [self photoAtIndex:index];
 }
 
-- (MWZoomingScrollView *)dequeueRecycledPage {
-	MWZoomingScrollView *page = [_recycledPages anyObject];
+- (MWMotionView *)dequeueRecycledPage {
+	MWMotionView *page = [_recycledPages anyObject];
 	if (page) {
 		[_recycledPages removeObject:page];
 	}
@@ -1124,7 +1124,7 @@
     UIButton *selectedButton = (UIButton *)sender;
     selectedButton.selected = !selectedButton.selected;
     NSUInteger index = NSUIntegerMax;
-    for (MWZoomingScrollView *page in _visiblePages) {
+    for (MWMotionView *page in _visiblePages) {
         if (page.selectedButton == selectedButton) {
             index = page.index;
             break;
@@ -1307,7 +1307,7 @@
         _toolbar.frame = CGRectOffset([self frameForToolbarAtOrientation:self.interfaceOrientation], 0, animatonOffset);
         
         // Captions
-        for (MWZoomingScrollView *page in _visiblePages) {
+        for (MWMotionView *page in _visiblePages) {
             if (page.captionView) {
                 MWCaptionView *v = page.captionView;
                 // Pass any index, all we're interested in is the Y
@@ -1333,7 +1333,7 @@
         _toolbar.alpha = alpha;
 
         // Captions
-        for (MWZoomingScrollView *page in _visiblePages) {
+        for (MWMotionView *page in _visiblePages) {
             if (page.captionView) {
                 MWCaptionView *v = page.captionView;
                 if (slideAndFade) {
@@ -1348,7 +1348,7 @@
         }
         
         // Selected buttons
-        for (MWZoomingScrollView *page in _visiblePages) {
+        for (MWMotionView *page in _visiblePages) {
             if (page.selectedButton) {
                 UIButton *v = page.selectedButton;
                 CGRect newFrame = [self frameForSelectedButton:v atIndex:0];

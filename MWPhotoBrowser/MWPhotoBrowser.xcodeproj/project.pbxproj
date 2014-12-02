@@ -87,16 +87,25 @@
 		4C6F96E514AF70BD00F8389A /* MWPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F96D914AF70BD00F8389A /* MWPhoto.m */; };
 		4C6F96E614AF70BD00F8389A /* MWPhotoBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6F96DA14AF70BD00F8389A /* MWPhotoBrowser.h */; settings = {ATTRIBUTES = (); }; };
 		4C6F96E714AF70BD00F8389A /* MWPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F96DB14AF70BD00F8389A /* MWPhotoBrowser.m */; };
-		4C6F96E814AF70BD00F8389A /* MWTapDetectingImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6F96DC14AF70BD00F8389A /* MWTapDetectingImageView.h */; };
-		4C6F96E914AF70BD00F8389A /* MWTapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F96DD14AF70BD00F8389A /* MWTapDetectingImageView.m */; };
-		4C6F96EA14AF70BD00F8389A /* MWTapDetectingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6F96DE14AF70BD00F8389A /* MWTapDetectingView.h */; };
-		4C6F96EB14AF70BD00F8389A /* MWTapDetectingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F96DF14AF70BD00F8389A /* MWTapDetectingView.m */; };
 		4C6F96EC14AF70BD00F8389A /* MWZoomingScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6F96E014AF70BD00F8389A /* MWZoomingScrollView.h */; };
 		4C6F96ED14AF70BD00F8389A /* MWZoomingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F96E114AF70BD00F8389A /* MWZoomingScrollView.m */; };
 		4C6F96F614AF710800F8389A /* MBProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6F96F414AF710800F8389A /* MBProgressHUD.h */; };
 		4C6F96F714AF710800F8389A /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F96F514AF710800F8389A /* MBProgressHUD.m */; };
 		4C6F97C714AF74E200F8389A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6F97C614AF74E200F8389A /* MessageUI.framework */; };
 		4CB08BA314B1F38700730E9F /* MWPhotoProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB08BA214B1F38700730E9F /* MWPhotoProtocol.h */; };
+		78509A8E1A2D9EC400D44F9D /* CRMotionView.h in Headers */ = {isa = PBXBuildFile; fileRef = 78509A881A2D9EC400D44F9D /* CRMotionView.h */; };
+		78509A8F1A2D9EC400D44F9D /* CRMotionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78509A891A2D9EC400D44F9D /* CRMotionView.m */; };
+		78509A901A2D9EC400D44F9D /* CRZoomScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 78509A8A1A2D9EC400D44F9D /* CRZoomScrollView.h */; };
+		78509A911A2D9EC400D44F9D /* CRZoomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78509A8B1A2D9EC400D44F9D /* CRZoomScrollView.m */; };
+		78509A921A2D9EC400D44F9D /* UIScrollView+CRScrollIndicator.h in Headers */ = {isa = PBXBuildFile; fileRef = 78509A8C1A2D9EC400D44F9D /* UIScrollView+CRScrollIndicator.h */; };
+		78509A931A2D9EC400D44F9D /* UIScrollView+CRScrollIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 78509A8D1A2D9EC400D44F9D /* UIScrollView+CRScrollIndicator.m */; };
+		78509A961A2D9F2500D44F9D /* MWMotionView.h in Headers */ = {isa = PBXBuildFile; fileRef = 78509A941A2D9F2500D44F9D /* MWMotionView.h */; };
+		78509A971A2D9F2500D44F9D /* MWMotionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78509A951A2D9F2500D44F9D /* MWMotionView.m */; };
+		78509A991A2DA34900D44F9D /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78509A981A2DA34900D44F9D /* CoreMotion.framework */; };
+		78509A9E1A2DA36400D44F9D /* MWTapDetectingImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 78509A9A1A2DA36400D44F9D /* MWTapDetectingImageView.h */; };
+		78509A9F1A2DA36400D44F9D /* MWTapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78509A9B1A2DA36400D44F9D /* MWTapDetectingImageView.m */; };
+		78509AA01A2DA36400D44F9D /* MWTapDetectingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 78509A9C1A2DA36400D44F9D /* MWTapDetectingView.h */; };
+		78509AA11A2DA36400D44F9D /* MWTapDetectingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78509A9D1A2DA36400D44F9D /* MWTapDetectingView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -182,10 +191,6 @@
 		4C6F96D914AF70BD00F8389A /* MWPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWPhoto.m; path = Classes/MWPhoto.m; sourceTree = SOURCE_ROOT; };
 		4C6F96DA14AF70BD00F8389A /* MWPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWPhotoBrowser.h; path = Classes/MWPhotoBrowser.h; sourceTree = SOURCE_ROOT; };
 		4C6F96DB14AF70BD00F8389A /* MWPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWPhotoBrowser.m; path = Classes/MWPhotoBrowser.m; sourceTree = SOURCE_ROOT; };
-		4C6F96DC14AF70BD00F8389A /* MWTapDetectingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWTapDetectingImageView.h; path = Classes/MWTapDetectingImageView.h; sourceTree = SOURCE_ROOT; };
-		4C6F96DD14AF70BD00F8389A /* MWTapDetectingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWTapDetectingImageView.m; path = Classes/MWTapDetectingImageView.m; sourceTree = SOURCE_ROOT; };
-		4C6F96DE14AF70BD00F8389A /* MWTapDetectingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWTapDetectingView.h; path = Classes/MWTapDetectingView.h; sourceTree = SOURCE_ROOT; };
-		4C6F96DF14AF70BD00F8389A /* MWTapDetectingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWTapDetectingView.m; path = Classes/MWTapDetectingView.m; sourceTree = SOURCE_ROOT; };
 		4C6F96E014AF70BD00F8389A /* MWZoomingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWZoomingScrollView.h; path = Classes/MWZoomingScrollView.h; sourceTree = SOURCE_ROOT; };
 		4C6F96E114AF70BD00F8389A /* MWZoomingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWZoomingScrollView.m; path = Classes/MWZoomingScrollView.m; sourceTree = SOURCE_ROOT; };
 		4C6F96EF14AF70DC00F8389A /* MWPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MWPhotoBrowser.bundle; sourceTree = SOURCE_ROOT; };
@@ -193,6 +198,19 @@
 		4C6F96F514AF710800F8389A /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = Libraries/MBProgressHUD/MBProgressHUD.m; sourceTree = SOURCE_ROOT; };
 		4C6F97C614AF74E200F8389A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		4CB08BA214B1F38700730E9F /* MWPhotoProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWPhotoProtocol.h; path = Classes/MWPhotoProtocol.h; sourceTree = SOURCE_ROOT; };
+		78509A881A2D9EC400D44F9D /* CRMotionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRMotionView.h; sourceTree = "<group>"; };
+		78509A891A2D9EC400D44F9D /* CRMotionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRMotionView.m; sourceTree = "<group>"; };
+		78509A8A1A2D9EC400D44F9D /* CRZoomScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRZoomScrollView.h; sourceTree = "<group>"; };
+		78509A8B1A2D9EC400D44F9D /* CRZoomScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRZoomScrollView.m; sourceTree = "<group>"; };
+		78509A8C1A2D9EC400D44F9D /* UIScrollView+CRScrollIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+CRScrollIndicator.h"; sourceTree = "<group>"; };
+		78509A8D1A2D9EC400D44F9D /* UIScrollView+CRScrollIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+CRScrollIndicator.m"; sourceTree = "<group>"; };
+		78509A941A2D9F2500D44F9D /* MWMotionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWMotionView.h; path = Classes/MWMotionView.h; sourceTree = SOURCE_ROOT; };
+		78509A951A2D9F2500D44F9D /* MWMotionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWMotionView.m; path = Classes/MWMotionView.m; sourceTree = SOURCE_ROOT; };
+		78509A981A2DA34900D44F9D /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		78509A9A1A2DA36400D44F9D /* MWTapDetectingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWTapDetectingImageView.h; path = Classes/MWTapDetectingImageView.h; sourceTree = SOURCE_ROOT; };
+		78509A9B1A2DA36400D44F9D /* MWTapDetectingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWTapDetectingImageView.m; path = Classes/MWTapDetectingImageView.m; sourceTree = SOURCE_ROOT; };
+		78509A9C1A2DA36400D44F9D /* MWTapDetectingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWTapDetectingView.h; path = Classes/MWTapDetectingView.h; sourceTree = SOURCE_ROOT; };
+		78509A9D1A2DA36400D44F9D /* MWTapDetectingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWTapDetectingView.m; path = Classes/MWTapDetectingView.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +218,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78509A991A2DA34900D44F9D /* CoreMotion.framework in Frameworks */,
 				0E3CF61A18CF321F000EC5F2 /* MapKit.framework in Frameworks */,
 				0E8515CA17FCB05B00FE1EF3 /* AssetsLibrary.framework in Frameworks */,
 				0E8515C417FC780500FE1EF3 /* QuartzCore.framework in Frameworks */,
@@ -279,6 +298,7 @@
 		4C6F96C614AF704100F8389A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				78509A981A2DA34900D44F9D /* CoreMotion.framework */,
 				0E3CF61918CF321F000EC5F2 /* MapKit.framework */,
 				0E8515C917FCB05B00FE1EF3 /* AssetsLibrary.framework */,
 				0E8515C317FC780500FE1EF3 /* QuartzCore.framework */,
@@ -317,10 +337,12 @@
 				0E3D58D518047B600000E3A0 /* MWGridCell.m */,
 				4C6F96E014AF70BD00F8389A /* MWZoomingScrollView.h */,
 				4C6F96E114AF70BD00F8389A /* MWZoomingScrollView.m */,
-				4C6F96DC14AF70BD00F8389A /* MWTapDetectingImageView.h */,
-				4C6F96DD14AF70BD00F8389A /* MWTapDetectingImageView.m */,
-				4C6F96DE14AF70BD00F8389A /* MWTapDetectingView.h */,
-				4C6F96DF14AF70BD00F8389A /* MWTapDetectingView.m */,
+				78509A9A1A2DA36400D44F9D /* MWTapDetectingImageView.h */,
+				78509A9B1A2DA36400D44F9D /* MWTapDetectingImageView.m */,
+				78509A9C1A2DA36400D44F9D /* MWTapDetectingView.h */,
+				78509A9D1A2DA36400D44F9D /* MWTapDetectingView.m */,
+				78509A941A2D9F2500D44F9D /* MWMotionView.h */,
+				78509A951A2D9F2500D44F9D /* MWMotionView.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -328,6 +350,7 @@
 		4C6F96F014AF70E800F8389A /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				78509A871A2D9EC400D44F9D /* CRMotionView */,
 				0E3D589B180474330000E3A0 /* PSTCollectionView (1.2) */,
 				0E8515BE17FC77D200FE1EF3 /* DACircularProgress (675f395) */,
 				4C6F96F214AF70FA00F8389A /* MBProgressHUD (0.8) */,
@@ -394,6 +417,19 @@
 			path = MWPhotoBrowser;
 			sourceTree = "<group>";
 		};
+		78509A871A2D9EC400D44F9D /* CRMotionView */ = {
+			isa = PBXGroup;
+			children = (
+				78509A881A2D9EC400D44F9D /* CRMotionView.h */,
+				78509A891A2D9EC400D44F9D /* CRMotionView.m */,
+				78509A8A1A2D9EC400D44F9D /* CRZoomScrollView.h */,
+				78509A8B1A2D9EC400D44F9D /* CRZoomScrollView.m */,
+				78509A8C1A2D9EC400D44F9D /* UIScrollView+CRScrollIndicator.h */,
+				78509A8D1A2D9EC400D44F9D /* UIScrollView+CRScrollIndicator.m */,
+			);
+			path = CRMotionView;
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -414,20 +450,20 @@
 				0E3D58C8180474330000E3A0 /* PSTCollectionViewLayout.h in Headers */,
 				0E3D58BE180474330000E3A0 /* PSTCollectionViewCommon.h in Headers */,
 				0E3D58D0180474330000E3A0 /* PSTGridLayoutRow.h in Headers */,
+				78509AA01A2DA36400D44F9D /* MWTapDetectingView.h in Headers */,
 				4C6F96E414AF70BD00F8389A /* MWPhoto.h in Headers */,
 				4C6F96E614AF70BD00F8389A /* MWPhotoBrowser.h in Headers */,
 				0E3D58CC180474330000E3A0 /* PSTGridLayoutInfo.h in Headers */,
 				2615E44F18CD57E500447857 /* MKAnnotationView+WebCache.h in Headers */,
 				0E17D76A17FAEADE0094ABF6 /* SDWebImageDecoder.h in Headers */,
 				0E17D77917FAEADE0094ABF6 /* UIImage+MultiFormat.h in Headers */,
+				78509A961A2D9F2500D44F9D /* MWMotionView.h in Headers */,
 				0E17D76E17FAEADE0094ABF6 /* SDWebImageDownloaderOperation.h in Headers */,
 				0E3D58C1180474330000E3A0 /* PSTCollectionViewData.h in Headers */,
 				0E3D5899180467550000E3A0 /* MWGridViewController.h in Headers */,
 				0E3D58BA180474330000E3A0 /* PSTCollectionView.h in Headers */,
-				4C6F96E814AF70BD00F8389A /* MWTapDetectingImageView.h in Headers */,
 				0E17D77D17FAEADE0094ABF6 /* UIImageView+WebCache.h in Headers */,
 				0E3D58C5180474330000E3A0 /* PSTCollectionViewItemKey.h in Headers */,
-				4C6F96EA14AF70BD00F8389A /* MWTapDetectingView.h in Headers */,
 				0E3D58CE180474330000E3A0 /* PSTGridLayoutItem.h in Headers */,
 				4C6F96EC14AF70BD00F8389A /* MWZoomingScrollView.h in Headers */,
 				0E3D58D618047B600000E3A0 /* MWGridCell.h in Headers */,
@@ -437,15 +473,19 @@
 				4CB08BA314B1F38700730E9F /* MWPhotoProtocol.h in Headers */,
 				0E17D77717FAEADE0094ABF6 /* UIImage+GIF.h in Headers */,
 				0EFEA24D17FB08B400E451B6 /* MWCommon.h in Headers */,
+				78509A921A2D9EC400D44F9D /* UIScrollView+CRScrollIndicator.h in Headers */,
 				0EF66C6719CC8E0000BC267E /* UIView+WebCacheOperation.h in Headers */,
 				0E17D77017FAEADE0094ABF6 /* SDWebImageManager.h in Headers */,
 				0E3D58DA18047D0B0000E3A0 /* MWPhotoBrowserPrivate.h in Headers */,
 				0E17D77317FAEADE0094ABF6 /* SDWebImagePrefetcher.h in Headers */,
+				78509A8E1A2D9EC400D44F9D /* CRMotionView.h in Headers */,
 				0E3D58D2180474330000E3A0 /* PSTGridLayoutSection.h in Headers */,
 				0E17D76C17FAEADE0094ABF6 /* SDWebImageDownloader.h in Headers */,
 				2615E44B18CD57C700447857 /* NSData+ImageContentType.h in Headers */,
 				0E17D77517FAEADE0094ABF6 /* UIButton+WebCache.h in Headers */,
+				78509A9E1A2DA36400D44F9D /* MWTapDetectingImageView.h in Headers */,
 				0E17D76617FAEADE0094ABF6 /* SDImageCache.h in Headers */,
+				78509A901A2D9EC400D44F9D /* CRZoomScrollView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,6 +543,7 @@
 				0E3D589A180467550000E3A0 /* MWGridViewController.m in Sources */,
 				0E17D77817FAEADE0094ABF6 /* UIImage+GIF.m in Sources */,
 				0E17D76917FAEADE0094ABF6 /* SDWebImageCompat.m in Sources */,
+				78509A931A2D9EC400D44F9D /* UIScrollView+CRScrollIndicator.m in Sources */,
 				0E17D77617FAEADE0094ABF6 /* UIButton+WebCache.m in Sources */,
 				0E3D58BB180474330000E3A0 /* PSTCollectionView.m in Sources */,
 				0E17D77A17FAEADE0094ABF6 /* UIImage+MultiFormat.m in Sources */,
@@ -524,20 +565,23 @@
 				0E17D76D17FAEADE0094ABF6 /* SDWebImageDownloader.m in Sources */,
 				0E3D58D718047B600000E3A0 /* MWGridCell.m in Sources */,
 				0E3D58D1180474330000E3A0 /* PSTGridLayoutRow.m in Sources */,
-				4C6F96E914AF70BD00F8389A /* MWTapDetectingImageView.m in Sources */,
 				0E3D58C9180474330000E3A0 /* PSTCollectionViewLayout.m in Sources */,
 				0E3D58CD180474330000E3A0 /* PSTGridLayoutInfo.m in Sources */,
-				4C6F96EB14AF70BD00F8389A /* MWTapDetectingView.m in Sources */,
+				78509A911A2D9EC400D44F9D /* CRZoomScrollView.m in Sources */,
 				0E3D58C2180474330000E3A0 /* PSTCollectionViewData.m in Sources */,
 				4C6F96ED14AF70BD00F8389A /* MWZoomingScrollView.m in Sources */,
+				78509A8F1A2D9EC400D44F9D /* CRMotionView.m in Sources */,
 				0E3D58CB180474330000E3A0 /* PSTCollectionViewUpdateItem.m in Sources */,
 				0E17D77117FAEADE0094ABF6 /* SDWebImageManager.m in Sources */,
 				4C6F96F714AF710800F8389A /* MBProgressHUD.m in Sources */,
+				78509AA11A2DA36400D44F9D /* MWTapDetectingView.m in Sources */,
 				0E3D58C4180474330000E3A0 /* PSTCollectionViewFlowLayout.m in Sources */,
+				78509A9F1A2DA36400D44F9D /* MWTapDetectingImageView.m in Sources */,
 				2615E44C18CD57C700447857 /* NSData+ImageContentType.m in Sources */,
 				0E3D58BD180474330000E3A0 /* PSTCollectionViewCell.m in Sources */,
 				0E8515C217FC77D200FE1EF3 /* DACircularProgressView.m in Sources */,
 				0E17D76717FAEADE0094ABF6 /* SDImageCache.m in Sources */,
+				78509A971A2D9F2500D44F9D /* MWMotionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
