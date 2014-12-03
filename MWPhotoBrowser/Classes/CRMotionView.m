@@ -183,6 +183,7 @@ static const CGFloat CRMotionViewRotationFactor = 4.0f;
 {
     // Put back motion if it was enabled
     self.stopTracking = NO;
+    [self.zoomScrollView removeFromSuperview];
 }
 
 
