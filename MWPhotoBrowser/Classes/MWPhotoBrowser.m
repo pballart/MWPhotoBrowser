@@ -381,7 +381,7 @@
     [self setNavBarAppearance:animated];
     
     // Update UI
-	[self hideControlsAfterDelay];
+	[self hideControls];
     
     // Initial appearance
     if (!_viewHasAppearedInitially) {
@@ -550,6 +550,7 @@
 	// Adjust contentOffset to preserve page location based on values collected prior to location
 	_pagingScrollView.contentOffset = [self contentOffsetForPageAtIndex:indexPriorToLayout];
 	[self didStartViewingPageAtIndex:_currentPageIndex]; // initial
+    [self hideControls];
     
 	// Reset
 	_currentPageIndex = indexPriorToLayout;
