@@ -86,6 +86,12 @@ static const CGFloat CRMotionViewRotationFactor = 4.0f;
     [self addGestureRecognizer:tapGesture];
 }
 
+- (void)prepareForReuse {
+    self.image = nil;
+    [self.zoomScrollView removeFromSuperview];
+    self.motionEnabled = NO;
+    self.motionEnabled = YES;
+}
 
 #pragma mark - UI actions
 
@@ -97,14 +103,9 @@ static const CGFloat CRMotionViewRotationFactor = 4.0f;
     if ([self.contentView isKindOfClass:[UIImageView class]] && self.isZoomEnabled) {
         
         UIImageView *imageView = (UIImageView *)self.contentView;
-        if (CGRectGetWidth(self.contentView.frame) >= imageView.image.size.width) {
+        if (CGRectGetWidth(self.frame) >= imageView.image.size.width) {
             return;
         }
-        
-        // Stop motion to avoid transition jump between two views
-//        [self stopMonitoring];
-        
-       
         
         // Init and setup the zoomable scroll view
         self.zoomScrollView = [[CRZoomScrollView alloc] initFromScrollView:self.scrollView withImage:imageView.image];

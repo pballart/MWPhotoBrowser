@@ -75,9 +75,7 @@
     self.photo = nil;
     self.captionView = nil;
     self.selectedButton = nil;
-    _motionView.image = nil;
-    _motionView.motionEnabled = NO;
-    _motionView.motionEnabled = YES;
+    [_motionView prepareForReuse];
     _index = NSUIntegerMax;
 }
 

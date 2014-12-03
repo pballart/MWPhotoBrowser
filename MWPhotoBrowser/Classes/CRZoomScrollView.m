@@ -186,13 +186,18 @@ static float const kAnimationDumping            = .8;
     // Force setup for zoomable imageView
     _image           = image;
     _imageView       = [[UIImageView alloc] initWithImage:_image];
-    _imageView.frame = (CGRect){.origin = CGPointMake(0, 0), .size = _imageView.image.size};
+    CGFloat ratio = 1;
+    if (_imageView.image.size.height < self.frame.size.height) {
+        ratio = self.frame.size.height / _imageView.image.size.height;
+    }
+    _imageView.frame = CGRectMake(0, 0, _imageView.image.size.width*ratio, _imageView.image.size.height*ratio);
     
     [self addSubview:_imageView];
     
     // Change contentsize accordingly
-    self.contentSize = _imageView.image.size;
+    self.contentSize = _imageView.frame.size;
     
     [self prepareZoomScrollView];
 }
+
 @end

@@ -24,5 +24,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame image:(UIImage *)image;
 - (instancetype)initWithFrame:(CGRect)frame contentView:(UIView *)contentView;
+- (void)prepareForReuse;
 
 @end
