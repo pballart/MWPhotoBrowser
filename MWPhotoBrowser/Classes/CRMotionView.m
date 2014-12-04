@@ -103,9 +103,9 @@ static const CGFloat CRMotionViewRotationFactor = 4.0f;
     if ([self.contentView isKindOfClass:[UIImageView class]] && self.isZoomEnabled) {
         
         UIImageView *imageView = (UIImageView *)self.contentView;
-        if (CGRectGetWidth(self.frame) >= imageView.image.size.width) {
-            return;
-        }
+//        if (CGRectGetWidth(self.frame) >= imageView.image.size.width) {
+//            return;
+//        }
         
         // Init and setup the zoomable scroll view
         self.zoomScrollView = [[CRZoomScrollView alloc] initFromScrollView:self.scrollView withImage:imageView.image];
