@@ -92,6 +92,10 @@ static const CGFloat CRMotionViewRotationFactor = 4.0f;
     self.motionEnabled = NO;
     self.motionEnabled = YES;
 }
+- (void)resetParallax {
+    [self.zoomScrollView removeFromSuperview];
+}
+
 
 #pragma mark - UI actions
 

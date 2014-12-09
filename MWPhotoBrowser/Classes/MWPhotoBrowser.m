@@ -853,7 +853,6 @@
 - (void)updateVisiblePageStates {
     NSSet *copy = [_visiblePages copy];
     for (MWMotionView *page in copy) {
-        
         // Update selection
         page.selectedButton.selected = [self photoIsSelectedAtIndex:page.index];
         
@@ -1172,6 +1171,10 @@
     // Update
     [self updateNavigation];
     [self setControlsHidden:NO animated:YES permanent:YES];
+    
+    // Reset motionView
+    MWMotionView *mView = [self pageDisplayedAtIndex:_currentPageIndex];
+    [mView resetParallax];
     
     // Animate grid in and photo scroller out
     [UIView animateWithDuration:animated ? 0.3 : 0 animations:^(void) {

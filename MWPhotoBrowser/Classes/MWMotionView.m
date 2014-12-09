@@ -79,6 +79,10 @@
     _index = NSUIntegerMax;
 }
 
+- (void)resetParallax {
+    [_motionView resetParallax];
+}
+
 #pragma mark - Image
 
 - (void)setPhoto:(id<MWPhoto>)photo {
@@ -245,7 +249,6 @@
     // Center
     if (!CGRectEqualToRect(_motionView.frame, frameToCenter))
         _motionView.frame = frameToCenter;
-    
 }
 
 #pragma mark - CRMotionView Delegate

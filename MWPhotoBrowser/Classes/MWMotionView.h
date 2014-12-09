@@ -24,5 +24,6 @@
 - (void)displayImageFailure;
 - (void)setMaxMinZoomScalesForCurrentBounds;
 - (void)prepareForReuse;
+- (void)resetParallax;
 
 @end
